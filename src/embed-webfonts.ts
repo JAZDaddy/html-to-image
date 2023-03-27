@@ -196,7 +196,7 @@ async function parseWebFontRules<T extends HTMLElement>(
     throw new Error('Provided element is not within a Document')
   }
 
-  const styleSheets = toArray<CSSStyleSheet>(node.ownerDocument.styleSheets)
+  const styleSheets = toArray<CSSStyleSheet>(node.ownerDocument.styleSheets).filter(css => !css.href || css.href.lastIndexOf(window.location.origin) === 0)
   const cssRules = await getCSSRules(styleSheets, options)
 
   return getWebFontRules(cssRules)
